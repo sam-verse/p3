@@ -13,6 +13,7 @@ import { ChatInterface } from './components/chat/ChatInterface';
 import { EventsCalendar } from './components/events/EventsCalendar';
 import { WelcomeBanner } from './components/dashboard/WelcomeBanner';
 import { RecommendedGroups } from './components/dashboard/RecommendedGroups';
+import { PeerToPeerHub } from './components/peer/PeerToPeerHub';
 
 function Dashboard() {
   return (
@@ -37,6 +38,7 @@ function App() {
           <Route path="alumni" element={<AlumniConnect />} />
           <Route path="chat" element={<ChatInterface />} />
           <Route path="events" element={<EventsCalendar />} />
+          <Route path="peer" element={<PeerToPeerHub />} />
         </Route>
       </Routes>
     </BrowserRouter>

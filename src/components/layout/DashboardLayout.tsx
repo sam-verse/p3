@@ -22,7 +22,7 @@ export function DashboardLayout() {
             }`}
           >
             <Users className="w-5 h-5 mr-3" />
-            Alumni Connect
+            Dashboard
           </Link>
           <Link
             to="/chat"
@@ -41,6 +41,23 @@ export function DashboardLayout() {
           >
             <Calendar className="w-5 h-5 mr-3" />
             Events
+          </Link><Link
+            to="/alumni"
+            className={`flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 ${
+              isActive('/alumni') ? 'bg-gray-100' : ''
+            }`}
+          >
+            <Users className="w-5 h-5 mr-3" />
+            Alumni
+          </Link>
+          <Link
+            to="/peer"
+            className={`flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 ${
+              isActive('/peer') ? 'bg-gray-100' : ''
+            }`}
+          >
+            <Users className="w-5 h-5 mr-3" />
+            P2P HUB
           </Link>
         </nav>
         <div className="absolute bottom-0 w-64 p-4 border-t">

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Send, Hash, Users } from 'lucide-react';
 
 const groups = [
@@ -25,14 +25,29 @@ const messages = [
 
 export function ChatInterface() {
   const [message, setMessage] = useState('');
+  const [chatMessages, setChatMessages] = useState(messages);
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   const handleSend = (e: React.FormEvent) => {
     e.preventDefault();
     if (message.trim()) {
-      // Handle sending message
+      const newMessage = {
+        id: chatMessages.length + 1,
+        sender: 'You',
+        content: message,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }), // Format timestamp
+      };
+      setChatMessages([...chatMessages, newMessage]);
       setMessage('');
     }
   };
+
+  useEffect(() => {
+    // Scroll to the bottom of the chat when a new message is added
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [chatMessages]);
 
   return (
     <div className="h-[calc(100vh-2rem)] flex">
@@ -62,17 +77,20 @@ export function ChatInterface() {
       <div className="flex-1 flex flex-col bg-gray-50">
         {/* Messages */}
         <div className="flex-1 p-4 overflow-y-auto">
-          {messages.map((msg) => (
-            <div key={msg.id} className="mb-4">
-              <div className="flex items-baseline">
-                <span className="font-medium">{msg.sender}</span>
-                <span className="ml-2 text-xs text-gray-500">
-                  {msg.timestamp}
-                </span>
+          {chatMessages.length === 0 ? (
+            <p className="text-gray-500 text-center">No messages yet. Start the conversation!</p>
+          ) : (
+            chatMessages.map((msg) => (
+              <div key={msg.id} className="mb-4">
+                <div className="flex items-baseline">
+                  <span className="font-medium">{msg.sender}</span>
+                  <span className="ml-2 text-xs text-gray-500">{msg.timestamp}</span>
+                </div>
+                <p className="mt-1 text-gray-700">{msg.content}</p>
               </div>
-              <p className="mt-1 text-gray-700">{msg.content}</p>
-            </div>
-          ))}
+            ))
+          )}
+          <div ref={messagesEndRef} /> {/* Reference for scrolling */}
         </div>
 
         {/* Input */}

@@ -38,6 +38,9 @@ const upcomingEvents = [
     title: 'Tech Industry Networking Night',
     date: '2024-04-15',
     time: '18:00',
+    location: 'Downtown Conference Center',
+    description: 'Join us for an evening of networking with industry professionals.',
+    rsvpLink: 'https://example.com/rsvp1',
   },
   {
     id: 2,
@@ -99,6 +102,7 @@ export function AlumniConnect() {
                 </div>
               ))}
           </div>
+          
         );
 
       case 'guidance':
@@ -111,20 +115,33 @@ export function AlumniConnect() {
                   key={person.id}
                   className="bg-white rounded-lg p-4 shadow-sm border flex items-center gap-4"
                 >
-                  <img
-                    src={person.image}
-                    alt={person.name}
-                    className="w-16 h-16 rounded-full object-cover"
-                  />
+                  <div className="flex-shrink-0 w-20 h-20 rounded-full overflow-hidden border-2 border-gray-200 flex items-center justify-center">
+                    <img
+                      src={person.image}
+                      alt={person.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
                   <div className="flex-1">
                     <h3 className="font-medium">{person.name}</h3>
                     <p className="text-gray-600 text-sm">
                       {person.role} at {person.company}
                     </p>
                   </div>
-                  <button className="bg-primary text-white px-4 py-2 rounded-lg text-sm">
-                    Book Session
-                  </button>
+                  <div className="flex gap-2">
+                    <button className="flex-1 bg-primary text-white py-2 rounded-lg flex items-center justify-center transition duration-200 hover:bg-primary-dark">
+                      <Calendar className="w-4 h-4 mr-2" />
+                      Meeting
+                    </button>
+                    <button className="flex-1 border border-gray-200 text-gray-700 py-2 rounded-lg flex items-center justify-center transition duration-200 hover:bg-gray-100">
+                      <MessageSquare className="w-4 h-4 mr-2" />
+                      Message
+                    </button>
+                    <a href={`https://www.linkedin.com/in/${person.name.replace(/\s+/g, '-').toLowerCase()}`} target="_blank" rel="noopener noreferrer" className="flex-1 border border-gray-200 text-gray-700 py-2 rounded-lg flex items-center justify-center transition duration-200 hover:bg-gray-100">
+                      <Users className="w-4 h-4 mr-2" />
+                      Connect
+                    </a>
+                  </div>
                 </div>
               ))}
             </div>
@@ -154,14 +171,18 @@ export function AlumniConnect() {
                     {person.department} ({person.graduationYear})
                   </div>
                   <div className="flex gap-2">
-                    <button className="flex-1 bg-primary text-white py-2 rounded-lg flex items-center justify-center">
+                    <button className="flex-1 bg-primary text-white py-2 rounded-lg flex items-center justify-center transition duration-200 hover:bg-primary-dark">
                       <Calendar className="w-4 h-4 mr-2" />
-                      Book Meeting
+                      meeting
                     </button>
-                    <button className="flex-1 border border-gray-200 text-gray-700 py-2 rounded-lg flex items-center justify-center">
+                    <button className="flex-1 border border-gray-200 text-gray-700 py-2 rounded-lg flex items-center justify-center transition duration-200 hover:bg-gray-100">
                       <MessageSquare className="w-4 h-4 mr-2" />
                       Message
                     </button>
+                    <a href={`https://www.linkedin.com/in/${person.name.replace(/\s+/g, '-').toLowerCase()}`} target="_blank" rel="noopener noreferrer" className="flex-1 border border-gray-200 text-gray-700 py-2 rounded-lg flex items-center justify-center transition duration-200 hover:bg-gray-100">
+                      <Users className="w-4 h-4 mr-2" />
+                      Connect
+                    </a>
                   </div>
                 </div>
               </div>
