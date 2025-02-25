@@ -1,96 +1,316 @@
 import React, { useState } from 'react';
+import { User, Users, MessageSquare, BookOpen, Plus, Info, X } from 'lucide-react';
 
-// Domain data with images and descriptions
-const domains = [
-  { 
-    id: 1, 
-    name: 'Web Development', 
-    description: 'Build websites and applications.', // Short description for card
-    detailedDescription: 'Web development is the process of creating and maintaining websites and web applications, involving front-end (UI/UX design using HTML, CSS, JavaScript), back-end (server-side logic using Python, PHP, Node.js), and full-stack development. With businesses and individuals increasingly shifting to digital platforms, the demand for web developers is growing rapidly. Emerging trends such as Progressive Web Apps (PWAs), Artificial Intelligence (AI) integration, blockchain, voice search optimization, and cloud computing are revolutionizing the field. The scope of web development is vast, offering opportunities in e-commerce, SaaS platforms, cybersecurity, and interactive web experiences. The rise of low-code/no-code platforms, IoT integration, and the metaverse is further expanding possibilities, making web development an ever-evolving and high-demand career.', // Detailed description
-    image: 'https://img.freepik.com/free-vector/web-site-development-programming-coding_107791-2187.jpg?t=st=1740395959~exp=1740399559~hmac=2d52704d74ed953e0b59264811848fbcac90dc62df00a18bbbed302a65472d7b&w=1380' 
-  },
-  { 
-    id: 2, 
-    name: 'App Development', 
-    description: 'Create mobile applications.', 
-    detailedDescription: 'App development is the process of designing and building mobile and web applications for various platforms, including Android, iOS, and cross-platform environments using technologies like Kotlin, Swift, Flutter, and React Native. With the increasing reliance on smartphones and digital services, the demand for mobile apps is higher than ever, spanning industries such as e-commerce, healthcare, finance, and entertainment. Emerging trends like AI-powered apps, 5G integration, augmented reality (AR), blockchain-based security, and cloud computing are shaping the future of app development. The rise of low-code/no-code platforms is also making app creation more accessible. With continuous advancements in technology, app development remains a highly lucrative and evolving field, offering endless career and business opportunities.', 
-    image: 'https://img.freepik.com/free-vector/mobile-application-tupography-banner-with-mobile-device-symbols-flat-illustration_1284-29498.jpg?t=st=1740395986~exp=1740399586~hmac=6648124d48f2efe509c2cbf7f22e541c3f452b6e24a7ceb9c9f6d9290f5a58d5&w=1380' 
-  },
-  { 
-    id: 3, 
-    name: 'Graphic Design', 
-    description: 'Design and Creativity.', 
-    detailedDescription: 'Graphic design is the art of visually communicating ideas through typography, imagery, and layout using tools like Adobe Photoshop, Illustrator, and Figma. It plays a crucial role in branding, marketing, web design, and digital content creation across industries such as advertising, media, and e-commerce. With the rise of digitalization, the demand for graphic designers is growing in UI/UX design, motion graphics, and social media content. Emerging trends like AI-driven design, 3D graphics, augmented reality (AR), and generative design are revolutionizing the field. As businesses increasingly focus on visual storytelling and user experience, graphic design continues to be a dynamic and highly sought-after profession with vast career opportunities.', 
-    image: 'https://img.freepik.com/free-vector/graphic-designer-typographic-header-artist-creating-modern-advertisment-digital-drawing-product-design-concept-flat-illustration-vector_613284-2651.jpg?t=st=1740396411~exp=1740400011~hmac=e251a627d9168e6544ae778fc7ba132091d0ace8f10e25845c7e30cd0cc07653&w=1380' 
-  },
-  { 
-    id: 4, 
-    name: 'Machine Learning', 
-    description: 'Explore algorithms.', 
-    detailedDescription: 'Machine Learning (ML) is a branch of artificial intelligence (AI) that enables systems to learn from data and make predictions without explicit programming. It is widely used in various domains, including healthcare, finance, e-commerce, and autonomous systems, leveraging algorithms like deep learning, natural language processing (NLP), and computer vision. With advancements in big data, cloud computing, and AI-driven automation, the demand for ML professionals is rapidly increasing. Emerging trends such as explainable AI, federated learning, edge AI, and generative models are shaping the future of ML. As industries continue to adopt AI-powered solutions, machine learning remains a highly promising field with vast career opportunities and transformative potential.', 
-    image: 'https://img.freepik.com/free-vector/difital-face-artificial-intelligence-concept-background_1017-18162.jpg?t=st=1740396059~exp=1740399659~hmac=9a5bd76cb7768f2c114ec63cc15ef0b6dfa9e5301eaf158592f2ba4b70508c6b&w=1800' 
-  },
-  { 
-    id: 5, 
-    name: 'Cybersecurity', 
-    description: 'Protect systems from attacks.', 
-    detailedDescription: 'Cybersecurity is the practice of protecting systems, networks, and data from cyber threats, ensuring confidentiality, integrity, and availability. With the rise of digital transformation, cybersecurity has become crucial in industries like finance, healthcare, and e-commerce to safeguard sensitive information from cyberattacks such as phishing, ransomware, and data breaches. Emerging trends like artificial intelligence (AI) in threat detection, zero-trust security models, blockchain for secure transactions, and quantum cryptography are reshaping the field. As cyber threats evolve, the demand for cybersecurity professionals continues to grow, making it a high-demand and future-proof career with vast opportunities in ethical hacking, cloud security, digital forensics, and risk management.', 
-    image: 'https://img.freepik.com/free-vector/personal-data-protection-banner_107791-5275.jpg?t=st=1740396110~exp=1740399710~hmac=d65708f0dbd2ae0ffe3982a064c096dcf3f90f01f1d0c756970c084821d9a679&w=1800' 
-  },
- 
-  { 
-    id: 6, 
-    name: 'Game Development', 
-    description: 'Design and create games.', 
-    detailedDescription: 'Game development is the process of designing, programming, and creating video games for various platforms, including PC, consoles, and mobile devices, using engines like Unity, Unreal Engine, and Godot. It combines elements of coding, 3D modeling, animation, and storytelling to deliver immersive gaming experiences. With the rise of augmented reality (AR), virtual reality (VR), cloud gaming, and AI-driven game mechanics, the industry is evolving rapidly. The demand for skilled game developers is increasing in areas like indie game development, AAA gaming, and metaverse experiences. As gaming technology advances and player engagement grows, game development remains a dynamic and lucrative career with limitless creative possibilities.', 
-    image: 'https://img.freepik.com/free-vector/gamer-typographic-header-person-play-computer-video-game-esports-team-pro-streamer-virtual-championship-vector-illustration-cartoon-style_613284-2695.jpg?t=st=1740396603~exp=1740400203~hmac=dfadb3b974ee2975e623dd87dd719d2c5b44ad0438f49c10f50ba9c3cd959c81&w=1380' 
-  },
-];
+const PeerToPeerHub: React.FC = () => {
+  const [openModal, setOpenModal] = useState<string | null>(null);
 
-export function PeerToPeerHub() {
-  const [selectedDomain, setSelectedDomain] = useState(null);
+  // WhatsApp community links with domains and detailed descriptions
+  const communityDomains = [
+    {
+      id: 'design',
+      name: 'Design',
+      description: 'Connect with UI/UX designers and share creative ideas',
+      link: 'https://chat.whatsapp.com/HWy3TCre3153YwMkm8rQWz',
+      icon: '🎨',
+      members: 128,
+      detailedDescription: `
+        <h3>Design Community</h3>
+        <p>Our design community brings together UI/UX designers, graphic artists, and creative thinkers from all experience levels.</p>
+        
+        <h4>What we discuss:</h4>
+        <ul>
+          <li>User interface design principles and patterns</li>
+          <li>User experience research and methodologies</li>
+          <li>Design tools like Figma, Adobe XD, and Sketch</li>
+          <li>Design systems and component libraries</li>
+          <li>Latest design trends and innovations</li>
+        </ul>
+        
+        <h4>Community activities:</h4>
+        <ul>
+          <li>Weekly design challenges and feedback sessions</li>
+          <li>Portfolio reviews and career advice</li>
+          <li>Resource sharing (templates, UI kits, icons)</li>
+          <li>Design sprint collaborations</li>
+        </ul>
+        
+        <p>Whether you're a beginner looking to learn the fundamentals or an experienced designer wanting to share knowledge, our community has something for everyone.</p>
+      `
+    },
+    {
+      id: 'gamedev',
+      name: 'Game Development',
+      description: 'Discuss game development techniques and collaborate on projects',
+      link: 'https://chat.whatsapp.com/CHh5Mh8qJ7bHAPiLj2xwyd',
+      icon: '🎮',
+      members: 95,
+      detailedDescription: `
+        <h3>Game Development Community</h3>
+        <p>Join fellow game developers, artists, designers, and enthusiasts in creating interactive experiences and games.</p>
+        
+        <h4>What we cover:</h4>
+        <ul>
+          <li>Game engines (Unity, Unreal, Godot)</li>
+          <li>Game design principles and mechanics</li>
+          <li>2D and 3D art creation for games</li>
+          <li>Game programming and optimization</li>
+          <li>Level design and world-building</li>
+        </ul>
+        
+        <h4>Community activities:</h4>
+        <ul>
+          <li>Game jams and collaborative projects</li>
+          <li>Code reviews and problem-solving sessions</li>
+          <li>Asset sharing and resource recommendations</li>
+          <li>Play-testing and feedback rounds</li>
+        </ul>
+        
+        <p>From simple 2D games to complex 3D worlds, our community supports developers at all skill levels. Join us to turn your game ideas into reality!</p>
+      `
+    },
+    {
+      id: 'webdev',
+      name: 'Web Development',
+      description: 'Share web development resources and solve coding challenges',
+      link: 'https://chat.whatsapp.com/CHh5Mh8qJ7bHAPiLj2xwyd', // Replace with actual link
+      icon: '💻',
+      members: 210,
+      detailedDescription: `
+        <h3>Web Development Community</h3>
+        <p>A community of frontend and backend developers working with modern web technologies.</p>
+        
+        <h4>Technologies we discuss:</h4>
+        <ul>
+          <li>Frontend frameworks (React, Vue, Angular)</li>
+          <li>Backend technologies (Node.js, Python, PHP)</li>
+          <li>Databases (SQL, NoSQL, GraphQL)</li>
+          <li>Web design and responsive layouts</li>
+          <li>Performance optimization and accessibility</li>
+        </ul>
+        
+        <h4>Community activities:</h4>
+        <ul>
+          <li>Code challenges and hackathons</li>
+          <li>Project collaboration opportunities</li>
+          <li>Mentorship programs for beginners</li>
+          <li>Tech talk sessions and tutorials</li>
+        </ul>
+        
+        <p>Whether you're building your first website or architecting complex web applications, our community provides support, resources, and collaboration opportunities.</p>
+      `
+    },
+    {
+      id: 'ai',
+      name: 'AI & Machine Learning',
+      description: 'Explore artificial intelligence and machine learning concepts',
+      link: 'https://chat.whatsapp.com/HWy3TCre3153YwMkm8rQWz', // Replace with actual link
+      icon: '🤖',
+      members: 156,
+      detailedDescription: `
+        <h3>AI & Machine Learning Community</h3>
+        <p>Connect with data scientists, ML engineers, and AI enthusiasts to explore the cutting edge of artificial intelligence.</p>
+        
+        <h4>Topics we cover:</h4>
+        <ul>
+          <li>Machine learning algorithms and models</li>
+          <li>Deep learning and neural networks</li>
+          <li>Natural language processing</li>
+          <li>Computer vision and image processing</li>
+          <li>Reinforcement learning and AI ethics</li>
+        </ul>
+        
+        <h4>Community activities:</h4>
+        <ul>
+          <li>ML model implementation challenges</li>
+          <li>Dataset sharing and analysis</li>
+          <li>Research paper discussions</li>
+          <li>AI project collaborations</li>
+        </ul>
+        
+        <p>From theoretical concepts to practical implementations, our community helps members understand and apply AI & ML techniques to real-world problems.</p>
+      `
+    }
+  ];
 
-  const handleCardClick = (domain) => {
-    setSelectedDomain(domain);
+  const openDetailModal = (id: string) => {
+    setOpenModal(id);
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+  };
+
+  const closeDetailModal = () => {
+    setOpenModal(null);
+    document.body.style.overflow = 'auto'; // Restore scrolling
   };
 
   return (
-    <div className="p-6">
-      <h1 className="text-3xl font-bold mb-6">Peer to Peer Hub</h1>
-      <p className="mb-4">Welcome to the Peer to Peer Hub! Here you can connect with your peers.</p>
-
-      {selectedDomain ? (
-        <div className="bg-white p-6 rounded-lg shadow-md mt-4">
-          <h2 className="text-2xl font-semibold">{selectedDomain.name}</h2>
-          <img src={selectedDomain.image} alt={selectedDomain.name} className="mt-4 rounded-lg w-full h-48 object-cover" />
-          <p className="mt-2 text-gray-700">{selectedDomain.detailedDescription}</p>
-          <div className="flex justify-between mt-4">
-            <button className="bg-primary text-white px-4 py-2 rounded-lg">
-              Join P2P Community
-            </button>
-            <button 
-              onClick={() => setSelectedDomain(null)} 
-              className="text-gray-500 underline"
-            >
-              Back to Domains
-            </button>
+    <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+      <h1 className="text-3xl font-bold mb-8 text-gray-900 text-center sm:text-left">Peer-to-Peer Learning Hub</h1>
+      
+      {/* Hub Introduction */}
+      <section className="mb-16">
+        <div className="bg-blue-50 p-6 sm:p-8 rounded-xl shadow-sm">
+          <h2 className="text-2xl font-semibold mb-4 text-gray-900">Connect with Peers & Learn Together</h2>
+          <p className="text-gray-700 text-lg mb-6 max-w-3xl">
+            Our peer-to-peer learning hub allows you to connect with fellow students,
+            share knowledge, and grow together. Join domain-specific communities,
+            find study partners, or participate in collaborative projects.
+          </p>
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+            <div className="flex flex-col items-center bg-white p-5 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+              <User className="h-8 w-8 text-blue-500 mb-3" />
+              <span className="text-sm font-medium text-center">Find Mentors</span>
+            </div>
+            <div className="flex flex-col items-center bg-white p-5 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+              <Users className="h-8 w-8 text-blue-500 mb-3" />
+              <span className="text-sm font-medium text-center">Join Groups</span>
+            </div>
+            <div className="flex flex-col items-center bg-white p-5 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+              <MessageSquare className="h-8 w-8 text-blue-500 mb-3" />
+              <span className="text-sm font-medium text-center">Ask Questions</span>
+            </div>
+            <div className="flex flex-col items-center bg-white p-5 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+              <BookOpen className="h-8 w-8 text-blue-500 mb-3" />
+              <span className="text-sm font-medium text-center">Share Resources</span>
+            </div>
           </div>
         </div>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {domains.map((domain) => (
-            <div
-              key={domain.id}
-              className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer"
-              onClick={() => handleCardClick(domain)}
-            >
-              <img src={domain.image} alt={domain.name} className="w-full h-32 object-cover rounded-lg" />
-              <h3 className="text-xl font-semibold mt-2">{domain.name}</h3>
-              <p className="mt-2 text-gray-600">{domain.description}</p> {/* Short description for card */}
+      </section>
+      
+      {/* WhatsApp Community Domains */}
+      <section className="mb-16">
+        <h2 className="text-2xl font-bold mb-6 text-gray-900">Join Our WhatsApp Communities</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {communityDomains.map((domain) => (
+            <div key={domain.id} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow h-full flex flex-col">
+              <div className="p-6 flex flex-col flex-grow">
+                <div className="flex items-center mb-4">
+                  <span className="text-3xl mr-3">{domain.icon}</span>
+                  <h3 className="text-xl font-semibold text-gray-900">{domain.name}</h3>
+                </div>
+                
+                <p className="text-gray-600 mb-4 flex-grow">{domain.description}</p>
+                
+                <div className="flex items-center text-sm text-gray-500 mb-6">
+                  <User className="h-5 w-5 mr-1" />
+                  {domain.members} members
+                </div>
+                
+                {/* Button Row */}
+                <div className="flex gap-3 mt-auto">
+                  {/* View More Button */}
+                  <button
+                    onClick={() => openDetailModal(domain.id)}
+                    className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2.5 px-4 rounded-lg transition-colors duration-300 flex items-center justify-center"
+                  >
+                    <Info className="h-5 w-5 mr-2" />
+                    <span>View More</span>
+                  </button>
+                  
+                  {/* Join Community Button */}
+                  <a
+                    href={domain.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 bg-green-600 hover:bg-green-700 text-white font-medium py-2.5 px-4 rounded-lg transition-colors duration-300 flex items-center justify-center"
+                  >
+                    <Plus className="h-5 w-5 mr-2" />
+                    <span>Join</span>
+                  </a>
+                </div>
+              </div>
             </div>
           ))}
+        </div>
+      </section>
+      
+      {/* Other Sections with Consistent Styling */}
+      <div className="grid gap-10 md:grid-cols-2 mb-16">
+        {/* Study Partners Section */}
+        <section className="h-full">
+          <h2 className="text-2xl font-bold mb-4 text-gray-900">Find Study Partners</h2>
+          <div className="bg-white rounded-lg shadow-md p-6 sm:p-8 h-full flex flex-col">
+            <p className="text-gray-700 mb-6 flex-grow">
+              Looking for someone to study with? Connect with peers who are working on similar subjects or projects.
+              Get help, share knowledge, and stay motivated together.
+            </p>
+            <button className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-6 rounded-lg transition-colors duration-300 w-full sm:w-auto self-start">
+              Find Partners
+            </button>
+          </div>
+        </section>
+        
+        {/* Peer Projects Section */}
+        <section className="h-full">
+          <h2 className="text-2xl font-bold mb-4 text-gray-900">Collaborative Projects</h2>
+          <div className="bg-white rounded-lg shadow-md p-6 sm:p-8 h-full flex flex-col">
+            <p className="text-gray-700 mb-6 flex-grow">
+              Join ongoing peer projects or start your own. Collaborate with others to build something amazing.
+              Develop real-world skills while creating portfolio-worthy projects.
+            </p>
+            <button className="bg-purple-600 hover:bg-purple-700 text-white font-medium py-2.5 px-6 rounded-lg transition-colors duration-300 w-full sm:w-auto self-start">
+              Explore Projects
+            </button>
+          </div>
+        </section>
+      </div>
+      
+      {/* Detail Modal */}
+      {openModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50" onClick={closeDetailModal}>
+          <div 
+            className="bg-white rounded-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl" 
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="sticky top-0 bg-white z-10 px-6 py-4 border-b flex justify-between items-center">
+              <div className="flex items-center">
+                <span className="text-3xl mr-3">
+                  {communityDomains.find(d => d.id === openModal)?.icon}
+                </span>
+                <h3 className="text-xl font-bold text-gray-900">
+                  {communityDomains.find(d => d.id === openModal)?.name}
+                </h3>
+              </div>
+              <button 
+                onClick={closeDetailModal}
+                className="text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300 rounded-full p-1"
+                aria-label="Close"
+              >
+                <X className="h-6 w-6" />
+              </button>
+            </div>
+            
+            <div className="p-6">
+              <div className="prose prose-sm sm:prose max-w-none" 
+                dangerouslySetInnerHTML={{ 
+                  __html: communityDomains.find(d => d.id === openModal)?.detailedDescription || ''
+                }} 
+              />
+              
+              <div className="mt-8 pt-4 border-t border-gray-200">
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <button
+                    onClick={closeDetailModal}
+                    className="sm:flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2.5 px-4 rounded-lg transition-colors"
+                  >
+                    Close
+                  </button>
+                  <a
+                    href={communityDomains.find(d => d.id === openModal)?.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="sm:flex-1 bg-green-600 hover:bg-green-700 text-white font-medium py-2.5 px-4 rounded-lg transition-colors flex items-center justify-center"
+                  >
+                    <Plus className="h-5 w-5 mr-2" />
+                    Join Community
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>
   );
-} 
+};
+
+export default PeerToPeerHub;
